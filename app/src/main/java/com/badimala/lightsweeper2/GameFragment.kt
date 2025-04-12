@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Toast
@@ -43,7 +45,7 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         var count = 0
         for (gridButton in lightGridLayout.children) {
             gridButton.setOnClickListener(this::onLightButtonClick)
-//            registerForContextMenu(gridButton)
+            registerForContextMenu(gridButton)
             gridButton.tag = count
             count++
         }
@@ -144,5 +146,35 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
                 gridButton.setBackgroundColor(lightOffColor)
             }
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        return when (item.itemId) {
+            R.id.set_light -> {
+                game.selectLight(selectedCell / GRID_SIZE,
+                    selectedCell % GRID_SIZE)
+                setButtonColors()
+                true
+            }
+            R.id.set_nonlight -> {
+                game.selectLight(selectedCell / GRID_SIZE,
+                    selectedCell % GRID_SIZE)
+                setButtonColors()
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+
     }
 }
