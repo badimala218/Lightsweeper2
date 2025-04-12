@@ -1,4 +1,4 @@
-package com.badimala.lightsweeper
+package com.badimala.lightsweeper2
 
 import java.util.Random
 

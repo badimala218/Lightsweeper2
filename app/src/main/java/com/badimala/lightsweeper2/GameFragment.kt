@@ -1,6 +1,9 @@
 package com.badimala.lightsweeper2
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
@@ -14,8 +17,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import com.badimala.lightsweeper.GRID_SIZE
-import com.badimala.lightsweeper.LightsweeperGame
+import com.badimala.lightsweeper2.GRID_SIZE
+import com.badimala.lightsweeper2.LightsweeperGame
 
 const val GAME_STATE = "gameState"
 const val GAME_MINES = "gameMines"
@@ -66,8 +69,7 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
 
         val newGameBtn = parentView.findViewById<Button>(R.id.new_game_button)
         newGameBtn.setOnClickListener {
-            startGame()
-            //val dialog = NewGameDialogFragment()
+            createNewGameDialog()
         }
 
         return parentView
@@ -84,9 +86,19 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         setButtonColors()
     }
 
-    //override fun onNewGameSelected(which: Int) {
-    //    startGame()
-    //}
+    private fun createNewGameDialog() {
+        val builder = AlertDialog.Builder(requireActivity())
+            .setTitle(R.string.new_game)
+            .setMessage(R.string.new_game_warning)
+            .setPositiveButton(R.string.yes, { dialog, which ->
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    startGame()
+                }
+            })
+            .setNegativeButton(R.string.no, null)
+            .create()
+            .show()
+    }
 
     private fun onLightButtonClick(view: View) {
 

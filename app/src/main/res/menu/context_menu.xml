@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/set_light"
+        android:title="@string/set_light">
+    </item>
+    <item android:id="@+id/set_nonlight"
+        android:title="@string/set_nonlight">
+    </item>
+</menu>
