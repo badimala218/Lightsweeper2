@@ -21,13 +21,20 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.badimala.lightsweeper2.GRID_SIZE
 import com.badimala.lightsweeper2.LightsweeperGame
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
+import android.view.animation.AccelerateInterpolator
 
 const val GAME_STATE = "gameState"
 const val GAME_MINES = "gameMines"
+const val TILE_RADIUS = 40f
 
 class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedListener {
     private lateinit var game: LightsweeperGame
     private lateinit var lightGridLayout: GridLayout
+    private lateinit var soundEffects: SoundEffects
     private var lightOnColor = 0
     private var lightOffColor = 0
     private var lightWrongColor = 0
@@ -58,6 +65,7 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         lightWrongColor = ContextCompat.getColor(requireActivity(), R.color.red)
         nonLightColor = ContextCompat.getColor(requireActivity(), R.color.gray)
         nonLightWrongColor = ContextCompat.getColor(requireActivity(), R.color.darker_red)
+        soundEffects = SoundEffects.getInstance(requireContext().applicationContext)
 
         game = LightsweeperGame()
 
@@ -109,7 +117,13 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         val row = buttonIndex / GRID_SIZE
         val col = buttonIndex % GRID_SIZE
 
-        game.selectLight(row, col)
+        if (game.selectLight(row, col))
+        {
+            soundEffects.playCorrect()
+        }
+        else {
+            soundEffects.playIncorrect()
+        }
         setButtonColors()
 
         // Congratulate the user if the game is over
@@ -177,4 +191,10 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        soundEffects.release()
+    }
+
 }

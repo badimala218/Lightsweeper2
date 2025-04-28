@@ -62,12 +62,14 @@ class LightsweeperGame {
                 (col < GRID_SIZE)
     }
 
-    fun selectLight(row: Int, col: Int) {
+    fun selectLight(row: Int, col: Int): Boolean {
         lightsGrid[row][col] = !lightsGrid[row][col]
         if (countAdjacentMines(row, col) == 0 &&
             lightsGrid[row][col] == true) {
             selectAdjacentLights(row, col)
         }
+        return (lightsGrid[row][col] && isMine(row, col)) ||
+                (!lightsGrid[row][col] && !isMine(row, col))
     }
 
     fun selectNonLight(row: Int, col: Int) {
