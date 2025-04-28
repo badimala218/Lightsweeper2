@@ -162,13 +162,13 @@ class GameFragment : Fragment() {//, NewGameDialogFragment.OnNewGameSelectedList
         val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
         return when (item.itemId) {
             R.id.set_light -> {
-                game.selectLight(selectedCell / GRID_SIZE,
+                game.selectAsLight(selectedCell / GRID_SIZE,
                     selectedCell % GRID_SIZE)
                 setButtonColors()
                 true
             }
             R.id.set_nonlight -> {
-                game.selectLight(selectedCell / GRID_SIZE,
+                game.selectAsNonLight(selectedCell / GRID_SIZE,
                     selectedCell % GRID_SIZE)
                 setButtonColors()
                 true

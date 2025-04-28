@@ -3,6 +3,7 @@
     <string name="title_game">Lightsweeper</string>
     <string name="title_help">Help</string>
     <string name="congrats">Congratulations!</string>
+    <string name="score">Previous Score: </string>
     <string name="help_instructions">Find all the lights to win!</string>
     <string name="light_bulb">Light bulb</string>
     <string name="new_game">New Game</string>

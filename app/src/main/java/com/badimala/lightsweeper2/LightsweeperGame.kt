@@ -10,6 +10,7 @@ class LightsweeperGame {
     // 2D list of booleans
     private val lightsGrid = MutableList(GRID_SIZE) { MutableList(GRID_SIZE) { true } }
     private val mines = MutableList(GRID_SIZE) { MutableList(GRID_SIZE) { true } }
+    private val visited = MutableList(GRID_SIZE) { MutableList(GRID_SIZE) { true } }
     private val directionX = arrayOf(-1, -1, -1, 0, 0, 1, 1, 1)
     private val directionY = arrayOf(-1, 0, 1, -1, 1, -1, 0, 1)
 
@@ -20,6 +21,7 @@ class LightsweeperGame {
             for (col in 0 until GRID_SIZE) {
                 mines[row][col] = false
                 lightsGrid[row][col] = false
+                visited[row][col] = false
             }
         }
         // Continue until all random mines have been created
@@ -54,7 +56,11 @@ class LightsweeperGame {
     }
 
     fun isNonLightOn(row: Int, col: Int): Boolean {
-        return false
+        return !lightsGrid[row][col] && visited[row][col]
+    }
+
+    fun isVisited(row: Int, col: Int): Boolean {
+        return visited[row][col]
     }
 
     fun isValidCell(row: Int, col: Int): Boolean {
@@ -63,15 +69,33 @@ class LightsweeperGame {
     }
 
     fun selectLight(row: Int, col: Int) {
-        lightsGrid[row][col] = !lightsGrid[row][col]
-        if (countAdjacentMines(row, col) == 0 &&
-            lightsGrid[row][col] == true) {
-            selectAdjacentLights(row, col)
+        if (visited[row][col] == false) {
+            visited[row][col] = true
+            lightsGrid[row][col] = !lightsGrid[row][col]
+            if (countAdjacentMines(row, col) == 0) {
+                selectAdjacentLights(row, col)
+            }
         }
     }
 
-    fun selectNonLight(row: Int, col: Int) {
+    fun selectAsLight(row: Int, col: Int) {
+        if (visited[row][col] == false) {
+            visited[row][col] = true
+            lightsGrid[row][col] = true
+            if (countAdjacentMines(row, col) == 0) {
+                selectAdjacentLights(row, col)
+            }
+        }
+    }
 
+    fun selectAsNonLight(row: Int, col: Int) {
+        if (visited[row][col] == false) {
+            visited[row][col] = true
+            lightsGrid[row][col] = false
+            if (countAdjacentMines(row, col) == 0) {
+                selectAdjacentLights(row, col)
+            }
+        }
     }
 
     private fun selectAdjacentLights(row: Int, col: Int) {
@@ -80,8 +104,8 @@ class LightsweeperGame {
             var newCol = col + directionY[direction]
             if (isValidCell(newRow, newCol) == true &&
                 isMine(newRow, newCol) == false &&
-                lightsGrid[row][col] == false) {
-                selectLight(newRow, newCol)
+                visited[row][col] == false) {
+                selectAsNonLight(newRow, newCol)
             }
         }
     }
@@ -90,12 +114,25 @@ class LightsweeperGame {
         get() {
             for (row in 0 until GRID_SIZE) {
                 for (col in 0.until(GRID_SIZE)) {
-                    if (lightsGrid[row][col] != mines[row][col]) {
+                    if (visited[row][col] == false) {
                         return false
                     }
                 }
             }
             return true
+        }
+
+    val score: Int
+        get() {
+            var count = 0
+            for (row in 0 until GRID_SIZE) {
+                for (col in 0.until(GRID_SIZE)) {
+                    if (lightsGrid[row][col] == mines[row][col]) {
+                        count++
+                    }
+                }
+            }
+            return count
         }
 
     var state: String
@@ -139,4 +176,6 @@ class LightsweeperGame {
                 }
             }
         }
+
+
 }
