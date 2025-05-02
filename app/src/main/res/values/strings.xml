@@ -2,6 +2,7 @@
     <string name="app_name">Lightsweeper</string>
     <string name="title_game">Lightsweeper</string>
     <string name="title_help">Help</string>
+    <string name="title_camera">Camera</string>
     <string name="congrats">Congratulations!</string>
     <string name="help_instructions">Find all the lights to win!</string>
     <string name="light_bulb">Light bulb</string>
@@ -11,6 +12,12 @@
     <string name="new_game_warning">Are you sure you want to start a new game?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="save">Save</string>
+    <string name="photo_desc">Photo from camera</string>
+    <string name="photo_saved">Photo saved.</string>
+    <string name="photo_not_saved">Problem saving the photo.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="use_last_saved_photo_as_profile">Use last saved photo as profile</string>
 </resources>

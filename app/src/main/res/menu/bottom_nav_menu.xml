@@ -11,4 +11,9 @@
         android:icon="@drawable/help_icon"
         android:title="@string/title_help" />
 
+    <item
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/camera_icon"
+        android:title="@string/title_camera" />
+
 </menu>

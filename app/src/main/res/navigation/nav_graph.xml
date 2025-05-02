@@ -16,4 +16,11 @@
         android:name="com.badimala.lightsweeper2.HelpFragment"
         android:label="@string/title_help"
         tools:layout="@layout/fragment_help" />
+
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="com.badimala.lightsweeper2.CameraFragment"
+        android:label="@string/title_camera"
+        tools:layout="@layout/fragment_camera"
+        />
 </navigation>
